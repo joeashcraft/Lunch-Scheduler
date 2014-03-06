@@ -78,7 +78,7 @@ function show_schedule($lunchslots, $roles, $slots=4) {
         echo "\t</select></th>\n";
         echo "\t<th class='center'><input type='submit' name='submit' value='Add' /></th>\n";
         echo "</tr>\n";
-        foreach ($lunchslots as $key => $value) {
+        foreach ($lunchslots as $value) {
                 show_lunchslot($value, $slots, $roles);
         }
 	echo "<tr>\n"; die();
@@ -108,34 +108,13 @@ function show_lunchslot($slot, $slots, $roles) {
         $result = mysql_query($query) or die(mysql_error());
         $num_rows = mysql_num_rows($result);
 	if($num_rows > 0){ 
-
-	echo "<h2 class='timeslot'>" . $slot . "</h2>\n";
-	echo "<ul class='list-lunches'>\n";
-	$row = mysql_fetch_array($result);
-	foreach ($row as $key => $cell) {
-var_dump($cell['name']);
-
-		echo "\t<li class='lunch-item'>" . unsanitize($cell['name']) . "</li>\n"; 
-	}
-	echo "</ul>\n";
-	}
-//        echo "<tr>\n\t<td class='label'>$slot</td>\n";
-//        while ($row = mysql_fetch_array($result)) {
-//                echo "\t<td class='data'><input type='radio' name='clear' value='" . $row['id'] . "' />" ;
-//		echo unsanitize($row['name']);
-//		if ($row['role']) {
-//                	echo "\t\t<img class='role-icon' alt='" . $row['role'] . "' src='" . $roles[$row['role']] . "' />\n"; 
-//		}
-//                echo "\t\t<!-- id: " . $row['id'] . " -->\n";
-//                echo "\t\t<!-- timestamp: " . $row['timestamp'] . " -->\n";
-//                echo "\t\t<!-- date: " . $row['date'] . " -->\n";
-//                echo "\t</td>\n";
-//        }
-//        while ($num_rows < $slots) {
-//                echo "\t<td class='data'></td>\n";
-//                $num_rows++;
-//        }
-//        echo "</tr>\n";
+		echo "<h2 class='timeslot'>" . $slot . "</h2>\n";
+		echo "<ul class='list-lunches'>\n";
+		while ($row = mysql_fetch_array($result)){
+			echo "\t<li class='lunch-item'>" . unsanitize($row['name']) . "</li>\n"; 
+		}
+		echo "</ul>\n";
+	} //end if
 }
 
 function sanitize($string) {
